@@ -92,7 +92,7 @@ img { display: block; max-width: 100%; }
 .index-row { display: grid; grid-template-columns: minmax(0, 1fr) 110px 130px 180px; gap: 28px; align-items: center; min-height: 108px; border-bottom: 1px solid var(--rule); transition: background .2s; }
 .index-row:hover { background: var(--white); }
 .index-row strong { font-size: clamp(18px, 2vw, 28px); letter-spacing: -.01em; }
-.index-row span { align-self: stretch; display: grid; place-items: center; color: var(--slate); font: 13px/1.5 var(--mono); text-align: center; }
+.index-row span { align-self: stretch; justify-self: stretch; display: grid; place-items: center; min-width: 0; color: var(--slate); font: 13px/1.5 var(--mono); text-align: center; }
 .index-row span:last-child { white-space: nowrap; font-variant-numeric: tabular-nums; }
 .filters { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 0 0 38px; }
 .filter { padding: 6px 0; border: 0; border-bottom: 1px solid transparent; background: none; color: var(--slate); cursor: pointer; font: 12px var(--mono); }
