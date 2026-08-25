@@ -859,3 +859,39 @@ body[data-page="detail"] .detail-visual.is-map .case-map { padding-block: 30px; 
   body[data-page="detail"] .detail-visual.is-map,
   body[data-page="detail"] .detail-visual.is-map > .project-visual { min-height: 340px; }
 }
+
+/* Evidence map — connected context, decision and contribution */
+.case-map { display: grid; grid-template-rows: auto 1fr auto; gap: 0; justify-content: stretch; padding: clamp(26px, 3vw, 42px); }
+.case-map-head { display: grid; grid-template-columns: 1fr auto; gap: 40px; padding-bottom: 20px; border-bottom: 1px solid #b9cdd1; font-family: var(--sans); }
+.case-map-head div { display: grid; gap: 6px; }
+.case-map-head div:last-child { text-align: right; }
+.case-map-head small,
+.case-map-foot small { color: #61737b; font-size: 16px; line-height: 1.45; }
+.case-map-head strong { font-size: 18px; line-height: 1.45; }
+.case-map-body { padding-block: clamp(26px, 3vw, 42px); }
+.case-map-point small { margin-bottom: 12px; font-size: 16px; }
+.case-map-point strong { font-size: clamp(23px, 2.15vw, 32px); line-height: 1.42; }
+.case-map-foot { display: grid; grid-template-columns: 1fr 1.25fr; gap: 44px; align-items: center; padding-top: 22px; border-top: 1px solid #b9cdd1; font-family: var(--sans); }
+.case-map-role { display: grid; gap: 8px; }
+.case-map-role strong { font-size: 19px; }
+.case-map-contribution { display: grid; grid-template-columns: 104px 1fr; gap: 22px; align-items: center; }
+.case-map-contribution > div { display: grid; gap: 8px; }
+.case-map-contribution > div strong { font-size: 17px; line-height: 1.55; }
+.contribution-ring { position: relative; display: grid; place-items: center; width: 104px; aspect-ratio: 1; border-radius: 50%; background: conic-gradient(#0798ac var(--contribution), #d4e2e4 0); }
+.contribution-ring::after { position: absolute; inset: 12px; border-radius: 50%; background: #eaf4f5; content: ""; }
+.contribution-ring b { position: relative; z-index: 1; font-size: 20px; }
+
+@media (max-width: 680px) {
+  .case-map { padding: 24px 20px; }
+  .case-map-head { grid-template-columns: 1fr; gap: 14px; }
+  .case-map-head div:last-child { text-align: left; }
+  .case-map-head small,
+  .case-map-foot small,
+  .case-map-point small { font-size: 15px; }
+  .case-map-body { padding-block: 24px; }
+  .case-map-foot { grid-template-columns: 1fr; gap: 22px; }
+  .case-map-contribution { grid-template-columns: 88px 1fr; gap: 18px; }
+  .contribution-ring { width: 88px; }
+  .contribution-ring::after { inset: 10px; }
+  .contribution-ring b { font-size: 17px; }
+}

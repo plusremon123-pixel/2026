@@ -8,14 +8,22 @@ function visual(project, loading = "lazy") {
   if (project.image) {
     return `<div class="project-visual"><img src="${project.image}" alt="${project.imageAlt || ""}" loading="${loading}"></div>`;
   }
+  const rates = [...String(project.scope || "").matchAll(/(\d{1,3})\s*%/g)].map(match => Number(match[1]));
+  const contribution = Math.min(100, Math.max(0, rates.length ? Math.max(...rates) : 100));
   return `<div class="project-visual case-map">
-    <div class="case-map-head"><span>${project.industry}</span><span>${project.type}</span></div>
+    <div class="case-map-head"><div><small>프로젝트 유형</small><strong>${project.industry} · ${project.type}</strong></div><div><small>기간</small><strong>${project.period}</strong></div></div>
     <div class="case-map-body">
       <div class="case-map-point"><small>해결 과제</small><strong>${project.problems[0]}</strong></div>
       <div class="case-map-connector" aria-hidden="true"></div>
       <div class="case-map-point decision"><small>핵심 결정</small><strong>${project.decisions[0].decision}</strong></div>
     </div>
-    <div class="case-map-foot"><span>${project.role}</span><span>${project.scope}</span></div>
+    <div class="case-map-foot">
+      <div class="case-map-role"><small>담당 역할</small><strong>${project.role}</strong></div>
+      <div class="case-map-contribution" style="--contribution:${contribution}%" aria-label="대표 참여 범위 ${contribution}%">
+        <span class="contribution-ring" aria-hidden="true"><b>${contribution}%</b></span>
+        <div><small>대표 참여 범위</small><strong>${project.scope}</strong></div>
+      </div>
+    </div>
   </div>`;
 }
 
