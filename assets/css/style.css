@@ -776,3 +776,14 @@ body[data-page="projects"] .index-row strong small { color: #078fa2; font-size: 
   .project-find label, .project-count, body[data-page="projects"] .index-row strong small { font-size: 15px; }
   .project-find input { font-size: 18px; }
 }
+
+/* Compact semantic visual when a project has no supplied screenshot */
+body[data-page="detail"] .detail-visual.is-map { height: auto; min-height: 420px; }
+body[data-page="detail"] .detail-visual.is-map > .project-visual { min-height: 420px; }
+body[data-page="detail"] .detail-visual.is-map .case-map { padding-block: 42px; }
+
+@media (max-width: 680px) {
+  body[data-page="detail"] .detail-visual.is-map,
+  body[data-page="detail"] .detail-visual.is-map > .project-visual { min-height: 360px; }
+  body[data-page="detail"] .detail-visual.is-map .case-map { padding-block: 26px; }
+}

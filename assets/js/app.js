@@ -95,7 +95,7 @@ function renderDetail() {
     <section class="detail-hero container">
       <div class="detail-topline"><p class="eyebrow">${p.industry} / ${p.type}</p><div class="project-meta">${p.period}<br>${p.role}</div></div>
       <h1 class="detail-thesis">${p.thesis}</h1>
-      <div class="detail-visual">${p.image ? `<img src="${p.image}" alt="${p.imageAlt || ""}">` : visual(p)}</div>
+      <div class="detail-visual${p.image ? "" : " is-map"}">${p.image ? `<img src="${p.image}" alt="${p.imageAlt || ""}">` : visual(p)}</div>
     </section>
     <div class="detail-layout container">
       <aside class="detail-rail"><div class="rail-inner">
