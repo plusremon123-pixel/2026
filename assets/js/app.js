@@ -3,9 +3,9 @@ const projects = window.PORTFOLIO_PROJECTS || [];
 const pathTo = (file) => file;
 const projectUrl = (slug) => `project.html?slug=${encodeURIComponent(slug)}`;
 
-function visual(project) {
+function visual(project, loading = "lazy") {
   if (project.image) {
-    return `<div class="project-visual"><img src="${project.image}" alt="${project.imageAlt || ""}" loading="lazy"></div>`;
+    return `<div class="project-visual"><img src="${project.image}" alt="${project.imageAlt || ""}" loading="${loading}"></div>`;
   }
   return `<div class="project-visual case-map">
     <div class="case-map-head"><span>${project.industry}</span><span>${project.type}</span></div>
@@ -34,7 +34,7 @@ function projectRow(project, index) {
 
 function featuredCollection(featured) {
   const [lead, ...rest] = featured;
-  return `<a class="featured-lead" href="${projectUrl(lead.slug)}">${visual(lead)}<div class="featured-lead-copy"><div class="project-meta">${lead.industry}<br>${lead.period}<br>${lead.role}</div><div><h3>${lead.title}</h3><p>${lead.thesis}</p><span class="project-open">대표 사례 보기</span></div></div></a>
+  return `<a class="featured-lead" href="${projectUrl(lead.slug)}">${visual(lead, "eager")}<div class="featured-lead-copy"><div class="project-meta">${lead.industry}<br>${lead.period}<br>${lead.role}</div><div><h3>${lead.title}</h3><p>${lead.thesis}</p><span class="project-open">대표 사례 보기</span></div></div></a>
     <div class="work-index">${rest.map(p => `<a class="work-index-row" href="${projectUrl(p.slug)}"><span class="work-index-industry">${p.industry}</span><strong>${p.title}</strong><p>${p.thesis}</p><span class="work-index-open">프로젝트 보기</span></a>`).join("")}</div>`;
 }
 
