@@ -790,3 +790,36 @@ body[data-page="detail"] .detail-visual.is-map .case-map { padding-block: 42px; 
   body[data-page="detail"] .detail-visual.is-map > .project-visual { min-height: 360px; }
   body[data-page="detail"] .detail-visual.is-map .case-map { padding-block: 26px; }
 }
+
+/* Tighter vertical rhythm — remove non-functional top whitespace */
+body[data-page="projects"] .page-hero,
+body[data-page="about"] .page-hero {
+  padding-top: clamp(62px, 6vw, 86px);
+  padding-bottom: clamp(70px, 7vw, 98px);
+}
+body[data-page="projects"] .page-hero .page-kicker { margin-bottom: 38px; }
+body[data-page="detail"] .detail-hero { padding-top: clamp(54px, 5.5vw, 78px); }
+body[data-page="contact"] .contact-page { padding-top: clamp(62px, 6vw, 88px); }
+body:not(.home-v2) .home-section,
+body:not(.home-v2) .project-catalog { padding-top: clamp(68px, 7vw, 96px); padding-bottom: clamp(82px, 8vw, 112px); }
+
+.career-proof { padding-top: clamp(84px, 9vw, 126px); padding-bottom: clamp(96px, 10vw, 142px); }
+.company-projects { padding-top: clamp(82px, 9vw, 126px); padding-bottom: clamp(96px, 10vw, 142px); }
+.operation-record { padding-top: clamp(86px, 9vw, 128px); padding-bottom: clamp(96px, 10vw, 142px); }
+.work-method { padding-top: clamp(90px, 9.5vw, 136px); padding-bottom: clamp(100px, 10.5vw, 150px); }
+.archive-block { padding-top: clamp(78px, 8vw, 116px); padding-bottom: clamp(86px, 9vw, 128px); }
+
+@media (max-width: 680px) {
+  body[data-page="projects"] .page-hero,
+  body[data-page="about"] .page-hero { padding-block: 54px 64px; }
+  body[data-page="projects"] .page-hero .page-kicker { margin-bottom: 30px; }
+  body[data-page="detail"] .detail-hero { padding-top: 48px; }
+  body[data-page="contact"] .contact-page { padding-top: 54px; }
+  body:not(.home-v2) .home-section,
+  body:not(.home-v2) .project-catalog { padding-top: 58px; padding-bottom: 72px; }
+  .career-proof,
+  .company-projects,
+  .operation-record,
+  .work-method { padding-top: 66px; padding-bottom: 78px; }
+  .archive-block { padding-top: 62px; padding-bottom: 72px; }
+}
