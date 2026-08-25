@@ -52,7 +52,7 @@ function featuredCollection(featured) {
 
 function renderHome() {
   const operational = projects.filter(p => p.operational);
-  const companyOrder = ["LG U+", "대교", "웅진씽크빅", "현대캐피탈", "하나캐피탈", "LG생활건강 · Avon", "한화생명", "서울시", "한국식품산업클러스터진흥원", "강남시설관리공단"];
+  const companyOrder = ["LG U+", "대교", "웅진씽크빅", "현대자동차", "하나캐피탈", "LG생활건강 · Avon", "한화생명", "서울시", "한국식품산업클러스터진흥원", "강남시설관리공단"];
   const companyNames = { "LG생활건강 · Avon": "Avon · LG생활건강", "한국식품산업클러스터진흥원": "한국식품산업클러스터", "강남시설관리공단": "강남시설관리공단" };
   const grouped = companyOrder.map(client => ({ client, items: projects.filter(p => p.client === client) })).filter(group => group.items.length);
   document.querySelector("#home-company-projects").innerHTML = grouped.map((group, index) => `<article class="company-project-row">
@@ -71,7 +71,8 @@ function renderProjects() {
   const count = document.querySelector("#project-count");
   const detailByArchiveTitle = {
     "웅진씽크빅 스마트올, 씽크빅 운영": "woongjin-smartall",
-    "현대캐피탈 오토디지털 운영": "hyundai-capital-auto",
+    "현대 핵심가치 사이트 운영/리뉴얼 구축": "hyundai-motor-operation",
+    "현대자동차 울산문화센터 사이트 운영": "hyundai-motor-operation",
     "대교 눈높이 국어 리뉴얼": "daekyo-korean",
     "식품산업 비즈니스 플랫폼": "food-business-platform",
     "U+고객센터앱 운영": "uplus-customer-center",
