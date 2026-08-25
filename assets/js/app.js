@@ -1,4 +1,5 @@
 const projects = window.PORTFOLIO_PROJECTS || [];
+const archiveProjects = window.PORTFOLIO_ARCHIVE || [];
 
 const pathTo = (file) => file;
 const projectUrl = (slug) => `project.html?slug=${encodeURIComponent(slug)}`;
@@ -57,15 +58,34 @@ function renderProjects() {
   const filters = document.querySelectorAll(".filter");
   const search = document.querySelector("#project-search");
   const count = document.querySelector("#project-count");
+  const detailByArchiveTitle = {
+    "웅진씽크빅 스마트올, 씽크빅 운영": "woongjin-smartall",
+    "현대캐피탈 오토디지털 운영": "hyundai-capital-auto",
+    "대교 눈높이 국어 리뉴얼": "daekyo-korean",
+    "식품산업 비즈니스 플랫폼": "food-business-platform",
+    "U+고객센터앱 운영": "uplus-customer-center",
+    "하나캐피탈 앱 리뉴얼": "hana-capital",
+    "미국 화장품 회사 Avon.com 통합 리뉴얼": "avon-global",
+    "스마트상담/스마트가입 웹 서비스 리뉴얼": "uplus-smart-consulting",
+    "보험월렛 2.0 고도화 프로젝트": "insurance-wallet",
+    "강남시설관리공단 홈페이지 리뉴얼": "gangnam-facility",
+    "서울시민카드 App 구축": "seoul-citizen-card"
+  };
   let activeFilter = "전체";
   const draw = () => {
     const query = search.value.trim().toLocaleLowerCase("ko-KR");
-    const filtered = activeFilter === "전체" ? projects : projects.filter(p => p.industry.includes(activeFilter));
-    const selected = query ? filtered.filter(p => `${p.client} ${p.title} ${p.industry}`.toLocaleLowerCase("ko-KR").includes(query)) : filtered;
-    count.textContent = `${selected.length}개의 프로젝트`;
-    list.innerHTML = selected.map(p => `<a class="index-row" href="${projectUrl(p.slug)}">
-      <strong><small>${p.client}</small>${p.title}</strong><span>${p.industry}</span><span>${p.role}</span><span>${p.period.split(" - ")[0]}</span>
-    </a>`).join("") || `<p class="empty-state">이 분류에 등록된 프로젝트가 없습니다.</p>`;
+    const filtered = activeFilter === "전체" ? archiveProjects : archiveProjects.filter(p => p.industry.includes(activeFilter));
+    const selected = query ? filtered.filter(p => `${p.client} ${p.title} ${p.industry} ${p.role}`.toLocaleLowerCase("ko-KR").includes(query)) : filtered;
+    const detailedCount = selected.filter(p => detailByArchiveTitle[p.title]).length;
+    count.textContent = `${selected.length}개의 경력 기록 · 상세 사례 ${detailedCount}개`;
+    list.innerHTML = selected.map(p => {
+      const slug = detailByArchiveTitle[p.title];
+      const tag = slug ? "a" : "div";
+      const link = slug ? ` href="${projectUrl(slug)}"` : "";
+      return `<${tag} class="index-row${slug ? " has-detail" : " archive-only"}"${link}>
+        <strong><small>${p.client}</small>${p.title}</strong><span>${p.industry}</span><span>${p.rate || "경력 기록"}</span><span>${p.period}</span>
+      </${tag}>`;
+    }).join("") || `<p class="empty-state">이 분류에 등록된 프로젝트가 없습니다.</p>`;
   };
   filters.forEach(button => button.addEventListener("click", () => {
     filters.forEach(b => b.classList.remove("active"));
