@@ -39,15 +39,13 @@ function featuredCollection(featured) {
 }
 
 function renderHome() {
-  const featured = projects.filter(p => p.featured);
+  const bySlug = slug => projects.find(p => p.slug === slug);
+  const lead = bySlug("daekyo-korean");
+  const selected = ["uplus-smart-consulting", "hana-capital", "avon-global"].map(bySlug).filter(Boolean);
   const operational = projects.filter(p => p.operational);
-  document.querySelector("#featured-list").innerHTML = featuredCollection(featured);
-  document.querySelector("#operational-grid").innerHTML = operational.map((p, i) => `
-    <a class="operational-item reveal" href="${projectUrl(p.slug)}">
-      <span class="op-period">${p.period}</span>
-      <h3>${p.title}</h3><span class="op-role">${p.role}</span>
-      <p>${p.overview}</p><span class="op-arrow">프로젝트 보기</span>
-    </a>`).join("");
+  document.querySelector("#home-lead-project").innerHTML = `<a class="journey-lead-case" href="${projectUrl(lead.slug)}">${visual(lead)}<div class="journey-case-copy"><div class="case-heading"><span>${lead.industry} · ${lead.period}</span><h3>${lead.title}</h3></div><dl><div><dt>문제</dt><dd>${lead.problems[0]}</dd></div><div><dt>내 역할</dt><dd>${lead.role}<br>${lead.scope}</dd></div><div><dt>핵심 결정</dt><dd>${lead.decisions[0].decision}</dd></div><div><dt>결과</dt><dd>${lead.impact[0]}</dd></div></dl><span class="case-link">프로젝트 상세 보기 →</span></div></a>`;
+  document.querySelector("#home-selected-projects").innerHTML = selected.map((p, i) => `<a class="journey-case-row case-${i + 2}" href="${projectUrl(p.slug)}"><div class="case-row-no">0${i + 2}</div><div class="case-row-title"><span>${p.industry} · ${p.period}</span><h3>${p.title}</h3><p>${p.problems[0]}</p></div><div class="case-row-decision"><span>핵심 결정</span><strong>${p.decisions[0].decision}</strong></div><div class="case-row-role"><span>내 역할</span><p>${p.role}<br>${p.scope}</p></div><span class="case-row-open">→</span></a>`).join("");
+  document.querySelector("#home-operations").innerHTML = operational.map(p => `<a class="operation-row" href="${projectUrl(p.slug)}"><time>${p.period}</time><h3>${p.title}</h3><span>${p.role}</span><p>${p.impact[0]}</p><b>→</b></a>`).join("");
 }
 
 function renderProjects() {
