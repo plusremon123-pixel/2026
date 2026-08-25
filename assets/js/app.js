@@ -3,6 +3,9 @@ const archiveProjects = window.PORTFOLIO_ARCHIVE || [];
 
 const pathTo = (file) => file;
 const projectUrl = (slug) => `project.html?slug=${encodeURIComponent(slug)}`;
+const formatPeriod = (value = "") => String(value)
+  .replace(/\s*~\s*/g, " – ")
+  .replace(/(\d{4})[.-](\d{1,2})(?!\d)/g, (_, year, month) => `${year}.${month.padStart(2, "0")}`);
 
 function visual(project, loading = "lazy") {
   if (project.image) {
@@ -91,7 +94,7 @@ function renderProjects() {
       const tag = slug ? "a" : "div";
       const link = slug ? ` href="${projectUrl(slug)}"` : "";
       return `<${tag} class="index-row${slug ? " has-detail" : " archive-only"}"${link}>
-        <strong><small>${p.client}</small>${p.title}</strong><span>${p.industry}</span><span>${p.rate || "경력 기록"}</span><span>${p.period}</span>
+        <strong><small>${p.client}</small>${p.title}</strong><span data-label="산업">${p.industry}</span><span data-label="참여 범위">${p.rate || "경력 기록"}</span><span data-label="기간">${formatPeriod(p.period)}</span>
       </${tag}>`;
     }).join("") || `<p class="empty-state">이 분류에 등록된 프로젝트가 없습니다.</p>`;
   };
