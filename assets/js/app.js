@@ -113,6 +113,9 @@ function renderDetail() {
     return;
   }
   document.title = `${p.title} - 이서현 포트폴리오`;
+  const currentIndex = projects.findIndex(item => item.slug === p.slug);
+  const previous = currentIndex > 0 ? projects[currentIndex - 1] : null;
+  const next = currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
   const process = p.process.map(item => `<article class="process-item"><h3>${item.label}</h3><p>${item.text}</p></article>`).join("");
   const decisions = p.decisions.map(item => `<div class="decision-row">
     <div class="decision-cell evidence"><span>확인한 근거</span><p>${item.evidence}</p></div>
@@ -141,7 +144,11 @@ function renderDetail() {
         <section class="case-section" id="process"><h2>분석하고 구조화한 과정</h2><div class="process-grid">${process}</div></section>
         <section class="case-section" id="decisions"><h2>근거에서 화면까지</h2><div class="decision-table">${decisions}</div></section>
         <section class="case-section" id="impact"><h2>프로젝트를 통해 만든 변화</h2><ul class="impact-list">${p.impact.map(x => `<li>${x}</li>`).join("")}</ul></section>
-        <a class="text-link" href="projects.html">모든 프로젝트 보기</a>
+        <nav class="project-sequence" aria-label="다른 프로젝트 보기">
+          ${previous ? `<a class="sequence-project previous" href="${projectUrl(previous.slug)}"><span>이전 프로젝트</span><strong>← ${previous.title}</strong></a>` : `<span class="sequence-project is-empty" aria-hidden="true"></span>`}
+          <a class="sequence-all" href="projects.html"><span>Project archive</span><strong>57개 프로젝트 전체 보기</strong></a>
+          ${next ? `<a class="sequence-project next" href="${projectUrl(next.slug)}"><span>다음 프로젝트</span><strong>${next.title} →</strong></a>` : `<span class="sequence-project is-empty" aria-hidden="true"></span>`}
+        </nav>
       </article>
     </div>`;
   observeSections();
