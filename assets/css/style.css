@@ -730,3 +730,49 @@ body:not(.home-v2) .site-footer { max-width: none; padding: 26px max(40px, calc(
 
   .home-v2 .case-row-decision strong { font-size: 17px; }
 }
+
+/* Company-led project access */
+.company-projects { padding: clamp(110px, 12vw, 180px) 0; background: #fff; }
+.company-project-index { border-top: 2px solid var(--navy); }
+.company-project-row { display: grid; grid-template-columns: 4fr 8fr; border-bottom: 1px solid #afc4c8; }
+.company-wordmark { display: flex; gap: 24px; align-items: baseline; padding: 34px 36px 34px 0; border-right: 1px solid #c6d5d8; }
+.company-wordmark span { color: #078fa2; font: 700 16px var(--mono); }
+.company-wordmark strong { font-size: clamp(25px, 2.7vw, 38px); line-height: 1.25; letter-spacing: -.045em; word-break: keep-all; }
+.company-project-links { display: grid; }
+.company-project-links a { display: grid; grid-template-columns: 2fr 5fr 28px; gap: 28px; align-items: center; min-height: 94px; padding: 22px 0 22px 38px; border-bottom: 1px solid #d3dfe1; }
+.company-project-links a:last-child { border-bottom: 0; }
+.company-project-links a:hover b { color: #078fa2; }
+.company-project-links span { color: #52666f; font-size: 16px; line-height: 1.55; }
+.company-project-links b { font-size: clamp(19px, 1.7vw, 24px); line-height: 1.45; transition: color .2s; }
+.company-project-links i { color: var(--coral); font-size: 23px; font-style: normal; }
+.company-project-all { display: flex; justify-content: space-between; margin-top: 46px; padding: 22px 0; border-block: 1px solid var(--navy); font-size: 18px; font-weight: 750; }
+
+.project-find { display: grid; grid-template-columns: 2fr 8fr; gap: 30px; align-items: center; margin-bottom: 34px; padding-block: 18px; border-block: 1px solid var(--ink); }
+.project-find label { font-size: 16px; font-weight: 750; }
+.project-find input { width: 100%; min-height: 54px; padding: 8px 0; border: 0; border-bottom: 2px solid #8baab0; border-radius: 0; outline: 0; background: transparent; color: var(--ink); font: 600 20px var(--sans); }
+.project-find input:focus { border-color: #078fa2; }
+.project-find input::placeholder { color: #6c7e85; opacity: 1; }
+.project-count { margin: 0 0 12px; color: #49616b; font-size: 16px; text-align: right; }
+body[data-page="projects"] .index-row strong { display: grid; gap: 7px; }
+body[data-page="projects"] .index-row strong small { color: #078fa2; font-size: 16px; font-weight: 700; letter-spacing: 0; }
+
+@media (max-width: 980px) {
+  .company-project-row { grid-template-columns: 1fr; }
+  .company-wordmark { border-right: 0; border-bottom: 1px solid #c6d5d8; }
+  .company-project-links a { padding-left: 0; }
+}
+
+@media (max-width: 680px) {
+  .company-projects { padding: 78px 0; }
+  .company-wordmark { gap: 16px; padding: 26px 0 22px; }
+  .company-wordmark span { font-size: 15px; }
+  .company-wordmark strong { font-size: 27px; }
+  .company-project-links a { grid-template-columns: 1fr 24px; gap: 7px 12px; min-height: 0; padding: 20px 0; }
+  .company-project-links span { grid-column: 1; font-size: 15px; }
+  .company-project-links b { grid-column: 1; font-size: 18px; }
+  .company-project-links i { grid-column: 2; grid-row: 1 / 3; align-self: center; }
+  .company-project-all { font-size: 16px; }
+  .project-find { grid-template-columns: 1fr; gap: 8px; }
+  .project-find label, .project-count, body[data-page="projects"] .index-row strong small { font-size: 15px; }
+  .project-find input { font-size: 18px; }
+}

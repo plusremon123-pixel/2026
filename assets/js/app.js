@@ -39,12 +39,14 @@ function featuredCollection(featured) {
 }
 
 function renderHome() {
-  const bySlug = slug => projects.find(p => p.slug === slug);
-  const lead = bySlug("daekyo-korean");
-  const selected = ["uplus-smart-consulting", "hana-capital", "avon-global"].map(bySlug).filter(Boolean);
   const operational = projects.filter(p => p.operational);
-  document.querySelector("#home-lead-project").innerHTML = `<a class="journey-lead-case" href="${projectUrl(lead.slug)}">${visual(lead)}<div class="journey-case-copy"><div class="case-heading"><span>${lead.industry} · ${lead.period}</span><h3>${lead.title}</h3></div><dl><div><dt>문제</dt><dd>${lead.problems[0]}</dd></div><div><dt>내 역할</dt><dd>${lead.role}<br>${lead.scope}</dd></div><div><dt>핵심 결정</dt><dd>${lead.decisions[0].decision}</dd></div><div><dt>결과</dt><dd>${lead.impact[0]}</dd></div></dl><span class="case-link">프로젝트 상세 보기 →</span></div></a>`;
-  document.querySelector("#home-selected-projects").innerHTML = selected.map((p, i) => `<a class="journey-case-row case-${i + 2}" href="${projectUrl(p.slug)}"><div class="case-row-no">0${i + 2}</div><div class="case-row-title"><span>${p.industry} · ${p.period}</span><h3>${p.title}</h3><p>${p.problems[0]}</p></div><div class="case-row-decision"><span>핵심 결정</span><strong>${p.decisions[0].decision}</strong></div><div class="case-row-role"><span>내 역할</span><p>${p.role}<br>${p.scope}</p></div><span class="case-row-open">→</span></a>`).join("");
+  const companyOrder = ["LG U+", "대교", "웅진씽크빅", "현대캐피탈", "하나캐피탈", "LG생활건강 · Avon", "한화생명", "서울시", "한국식품산업클러스터진흥원", "강남시설관리공단"];
+  const companyNames = { "LG생활건강 · Avon": "Avon · LG생활건강", "한국식품산업클러스터진흥원": "한국식품산업클러스터", "강남시설관리공단": "강남시설관리공단" };
+  const grouped = companyOrder.map(client => ({ client, items: projects.filter(p => p.client === client) })).filter(group => group.items.length);
+  document.querySelector("#home-company-projects").innerHTML = grouped.map((group, index) => `<article class="company-project-row">
+    <div class="company-wordmark"><span>${String(index + 1).padStart(2, "0")}</span><strong>${companyNames[group.client] || group.client}</strong></div>
+    <div class="company-project-links">${group.items.map(p => `<a href="${projectUrl(p.slug)}"><span>${p.industry} · ${p.period}</span><b>${p.title}</b><i>→</i></a>`).join("")}</div>
+  </article>`).join("");
   document.querySelector("#home-operations").innerHTML = operational.map(p => `<a class="operation-row" href="${projectUrl(p.slug)}"><time>${p.period}</time><h3>${p.title}</h3><span>${p.role}</span><p>${p.impact[0]}</p><b>→</b></a>`).join("");
 }
 
@@ -53,17 +55,25 @@ function renderProjects() {
   document.querySelector("#featured-list").innerHTML = featuredCollection(featured);
   const list = document.querySelector("#all-projects");
   const filters = document.querySelectorAll(".filter");
-  const draw = (filter = "전체") => {
-    const selected = filter === "전체" ? projects : projects.filter(p => p.industry.includes(filter));
+  const search = document.querySelector("#project-search");
+  const count = document.querySelector("#project-count");
+  let activeFilter = "전체";
+  const draw = () => {
+    const query = search.value.trim().toLocaleLowerCase("ko-KR");
+    const filtered = activeFilter === "전체" ? projects : projects.filter(p => p.industry.includes(activeFilter));
+    const selected = query ? filtered.filter(p => `${p.client} ${p.title} ${p.industry}`.toLocaleLowerCase("ko-KR").includes(query)) : filtered;
+    count.textContent = `${selected.length}개의 프로젝트`;
     list.innerHTML = selected.map(p => `<a class="index-row" href="${projectUrl(p.slug)}">
-      <strong>${p.title}</strong><span>${p.industry}</span><span>${p.role}</span><span>${p.period.split(" - ")[0]}</span>
+      <strong><small>${p.client}</small>${p.title}</strong><span>${p.industry}</span><span>${p.role}</span><span>${p.period.split(" - ")[0]}</span>
     </a>`).join("") || `<p class="empty-state">이 분류에 등록된 프로젝트가 없습니다.</p>`;
   };
   filters.forEach(button => button.addEventListener("click", () => {
     filters.forEach(b => b.classList.remove("active"));
     button.classList.add("active");
-    draw(button.dataset.filter);
+    activeFilter = button.dataset.filter;
+    draw();
   }));
+  search.addEventListener("input", draw);
   draw();
 }
 
