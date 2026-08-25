@@ -1,0 +1,14 @@
+# Local analysis and build artifacts
+tmp/
+dist/
+
+# Dependencies and local configuration
+node_modules/
+.env
+.env.*
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
