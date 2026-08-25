@@ -3,27 +3,24 @@ const projects = window.PORTFOLIO_PROJECTS || [];
 const pathTo = (file) => file;
 const projectUrl = (slug) => `project.html?slug=${encodeURIComponent(slug)}`;
 
-function visual(project, dark = false) {
+function visual(project) {
   if (project.image) {
     return `<div class="project-visual"><img src="${project.image}" alt="${project.imageAlt || ""}" loading="lazy"></div>`;
   }
-  const tone = dark ? "dark" : project.industry.includes("금융") ? "blue" : "";
-  return `<div class="project-visual" aria-hidden="true">
-    <div class="visual-system ${tone}">
-      <span class="system-label">${project.industry.toUpperCase()} / ${project.type.toUpperCase()}</span>
-      <strong>${project.thesis}</strong>
-      <div class="system-lines">
-        <div class="system-line"><span>CONTEXT</span><i></i></div>
-        <div class="system-line"><span>DECISION</span><i></i></div>
-        <div class="system-line"><span>OUTCOME</span><i></i></div>
-      </div>
+  return `<div class="project-visual case-map">
+    <div class="case-map-head"><span>${project.industry}</span><span>${project.type}</span></div>
+    <div class="case-map-body">
+      <div class="case-map-point"><small>해결 과제</small><strong>${project.problems[0]}</strong></div>
+      <div class="case-map-connector" aria-hidden="true"></div>
+      <div class="case-map-point decision"><small>핵심 결정</small><strong>${project.decisions[0].decision}</strong></div>
     </div>
+    <div class="case-map-foot"><span>${project.role}</span><span>${project.scope}</span></div>
   </div>`;
 }
 
 function projectRow(project, index) {
   return `<a class="featured-row reveal" href="${projectUrl(project.slug)}">
-    ${visual(project, index === 2)}
+    ${visual(project)}
     <div class="project-copy">
       <div>
         <div class="project-meta">${project.industry} · ${project.period}<br>${project.role}</div>
@@ -35,27 +32,33 @@ function projectRow(project, index) {
   </a>`;
 }
 
+function featuredCollection(featured) {
+  const [lead, ...rest] = featured;
+  return `<a class="featured-lead" href="${projectUrl(lead.slug)}">${visual(lead)}<div class="featured-lead-copy"><div class="project-meta">${lead.industry}<br>${lead.period}<br>${lead.role}</div><div><h3>${lead.title}</h3><p>${lead.thesis}</p><span class="project-open">대표 사례 보기</span></div></div></a>
+    <div class="work-index">${rest.map(p => `<a class="work-index-row" href="${projectUrl(p.slug)}"><span class="work-index-industry">${p.industry}</span><strong>${p.title}</strong><p>${p.thesis}</p><span class="work-index-open">프로젝트 보기</span></a>`).join("")}</div>`;
+}
+
 function renderHome() {
   const featured = projects.filter(p => p.featured);
   const operational = projects.filter(p => p.operational);
-  document.querySelector("#featured-list").innerHTML = featured.map(projectRow).join("");
+  document.querySelector("#featured-list").innerHTML = featuredCollection(featured);
   document.querySelector("#operational-grid").innerHTML = operational.map((p, i) => `
     <a class="operational-item reveal" href="${projectUrl(p.slug)}">
-      <span class="op-index">OPERATION / 0${i + 1}</span>
-      <h3>${p.title}</h3>
-      <p>${p.overview}</p>
+      <span class="op-period">${p.period}</span>
+      <h3>${p.title}</h3><span class="op-role">${p.role}</span>
+      <p>${p.overview}</p><span class="op-arrow">프로젝트 보기</span>
     </a>`).join("");
 }
 
 function renderProjects() {
   const featured = projects.filter(p => p.featured);
-  document.querySelector("#featured-list").innerHTML = featured.map(projectRow).join("");
+  document.querySelector("#featured-list").innerHTML = featuredCollection(featured);
   const list = document.querySelector("#all-projects");
   const filters = document.querySelectorAll(".filter");
   const draw = (filter = "전체") => {
     const selected = filter === "전체" ? projects : projects.filter(p => p.industry.includes(filter));
     list.innerHTML = selected.map(p => `<a class="index-row" href="${projectUrl(p.slug)}">
-      <strong>${p.title}</strong><span>${p.industry}</span><span>${p.role}</span><span>${p.period.split(" — ")[0]}</span>
+      <strong>${p.title}</strong><span>${p.industry}</span><span>${p.role}</span><span>${p.period.split(" - ")[0]}</span>
     </a>`).join("") || `<p class="empty-state">이 분류에 등록된 프로젝트가 없습니다.</p>`;
   };
   filters.forEach(button => button.addEventListener("click", () => {
@@ -73,18 +76,18 @@ function renderDetail() {
     document.querySelector("main").innerHTML = `<div class="container page-hero"><h1 class="page-title">프로젝트를 찾을 수 없습니다.</h1><a class="text-link" href="projects.html">Projects로 돌아가기</a></div>`;
     return;
   }
-  document.title = `${p.title} — 이서현 포트폴리오`;
-  const process = p.process.map((item, i) => `<article class="process-item"><span>0${i+1} / ${item.label}</span><p>${item.text}</p></article>`).join("");
-  const decisions = p.decisions.map((item, i) => `<div class="decision-row">
-    <div class="decision-cell"><span>EVIDENCE 0${i+1}</span>${item.evidence}</div>
-    <div class="decision-cell"><span>DECISION</span>${item.decision}</div>
-    <div class="decision-cell"><span>APPLICATION</span>${item.application}</div>
+  document.title = `${p.title} - 이서현 포트폴리오`;
+  const process = p.process.map(item => `<article class="process-item"><h3>${item.label}</h3><p>${item.text}</p></article>`).join("");
+  const decisions = p.decisions.map(item => `<div class="decision-row">
+    <div class="decision-cell evidence"><span>확인한 근거</span><p>${item.evidence}</p></div>
+    <div class="decision-cell decision"><span>내린 결정</span><p>${item.decision}</p></div>
+    <div class="decision-cell application"><span>적용 범위</span><p>${item.application}</p></div>
   </div>`).join("");
   document.querySelector("main").innerHTML = `
     <section class="detail-hero container">
       <div class="detail-topline"><p class="eyebrow">${p.industry} / ${p.type}</p><div class="project-meta">${p.period}<br>${p.role}</div></div>
       <h1 class="detail-thesis">${p.thesis}</h1>
-      <div class="detail-visual">${p.image ? `<img src="${p.image}" alt="${p.imageAlt || ""}">` : visual(p, p.slug === "avon-global").replace('class="project-visual"','class="project-visual"')}</div>
+      <div class="detail-visual">${p.image ? `<img src="${p.image}" alt="${p.imageAlt || ""}">` : visual(p)}</div>
     </section>
     <div class="detail-layout container">
       <aside class="detail-rail"><div class="rail-inner">
@@ -97,11 +100,11 @@ function renderDetail() {
         </nav>
       </div></aside>
       <article class="detail-content">
-        <section class="case-section" id="overview"><p class="eyebrow">Project overview</p><h2>프로젝트 개요</h2><p>${p.overview}</p></section>
-        <section class="case-section" id="problem"><p class="eyebrow">Context & problem</p><h2>무엇을 해결해야 했는가</h2><ol class="problem-list">${p.problems.map(x => `<li>${x}</li>`).join("")}</ol></section>
-        <section class="case-section" id="process"><p class="eyebrow">Analysis & planning</p><h2>분석하고 구조화한 과정</h2><div class="process-grid">${process}</div></section>
-        <section class="case-section" id="decisions"><p class="eyebrow">Decision log</p><h2>근거에서 화면까지</h2><div class="decision-table">${decisions}</div></section>
-        <section class="case-section" id="impact"><p class="eyebrow">Outcome</p><h2>프로젝트를 통해 만든 변화</h2><ul class="impact-list">${p.impact.map(x => `<li>${x}</li>`).join("")}</ul><p class="case-note">${p.note}</p></section>
+        <section class="case-section" id="overview"><h2>프로젝트 개요</h2><p>${p.overview}</p></section>
+        <section class="case-section" id="problem"><h2>무엇을 해결해야 했는가</h2><ol class="problem-list">${p.problems.map(x => `<li>${x}</li>`).join("")}</ol></section>
+        <section class="case-section" id="process"><h2>분석하고 구조화한 과정</h2><div class="process-grid">${process}</div></section>
+        <section class="case-section" id="decisions"><h2>근거에서 화면까지</h2><div class="decision-table">${decisions}</div></section>
+        <section class="case-section" id="impact"><h2>프로젝트를 통해 만든 변화</h2><ul class="impact-list">${p.impact.map(x => `<li>${x}</li>`).join("")}</ul></section>
         <a class="text-link" href="projects.html">모든 프로젝트 보기</a>
       </article>
     </div>`;
@@ -126,6 +129,18 @@ function initGlobal() {
     button.setAttribute("aria-expanded", String(open));
     button.textContent = open ? "Close" : "Menu";
   });
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && document.body.classList.contains("menu-open")) {
+      document.body.classList.remove("menu-open");
+      button?.setAttribute("aria-expanded", "false");
+      if (button) button.textContent = "Menu";
+      button?.focus();
+    }
+  });
+  document.querySelectorAll(".main-nav a").forEach(link => link.addEventListener("click", () => {
+    document.body.classList.remove("menu-open");
+    button?.setAttribute("aria-expanded", "false");
+  }));
   const copy = document.querySelector(".copy-button");
   copy?.addEventListener("click", async () => {
     await navigator.clipboard.writeText(copy.dataset.email);
