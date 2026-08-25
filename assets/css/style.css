@@ -512,7 +512,7 @@ body:not(.home-v2) .site-footer { max-width: none; padding: 26px max(40px, calc(
 .journey-hero { position: relative; min-height: 900px; overflow: hidden; background: var(--aqua); color: #fff; }
 .journey-route { position: absolute; top: 120px; left: -5%; width: 63%; height: 250px; border: 2px solid rgba(255,255,255,.45); border-color: rgba(255,255,255,.45) transparent transparent; border-radius: 50%; transform: rotate(7deg); }
 .journey-route::before, .journey-route::after { position: absolute; width: 14px; height: 14px; border-radius: 50%; background: var(--coral); content: ""; }
-.journey-route::before { top: 13px; left: 48%; }
+.journey-route::before { top: 13px; left: 70%; }
 .journey-route::after { top: 74px; right: 4%; background: #fff; }
 .hero-copy { position: relative; z-index: 4; width: min(54%, 760px); padding: 132px 0 124px max(24px, calc((100vw - 1440px) / 2 + 5vw)); }
 .hero-identity { width: min(100%, 520px); padding-bottom: 24px; border-bottom: 1px solid rgba(18,43,58,.3); }
