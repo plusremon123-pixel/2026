@@ -156,6 +156,8 @@ img { display: block; max-width: 100%; }
 .contact-page .page-title { max-width: 1120px; }
 .contact-row { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 120px; padding-top: 22px; border-top: 1px solid var(--ink); }
 .contact-email { font-size: clamp(25px, 4vw, 60px); letter-spacing: -.01em; }
+.contact-channels { display: flex; align-items: flex-end; gap: clamp(48px, 7vw, 110px); }
+.contact-phone { font-size: clamp(25px, 3.2vw, 48px); letter-spacing: .01em; font-variant-numeric: tabular-nums; }
 .copy-button { min-height: 44px; border: 0; border-bottom: 1px solid var(--ink); background: none; cursor: pointer; font: 13px var(--mono); }
 
 .site-footer { display: flex; justify-content: space-between; width: min(100%, var(--max)); margin: 0 auto; padding: 32px var(--gutter); border-top: 1px solid var(--rule); color: var(--slate); font: 10px var(--mono); }
@@ -368,6 +370,7 @@ body[data-page="contact"] .contact-page .eyebrow { color: #122b3a; }
 body[data-page="contact"] .contact-page .page-title { max-width: 1120px; font-size: clamp(48px, 6vw, 84px); }
 body[data-page="contact"] .contact-row { margin-top: clamp(70px, 9vw, 120px); border-color: rgba(18,43,58,.55); }
 body[data-page="contact"] .contact-email { font-size: clamp(28px, 4vw, 58px); }
+body[data-page="contact"] .contact-phone { font-size: clamp(26px, 3.2vw, 46px); }
 body[data-page="contact"] .copy-button { min-height: 48px; padding: 10px 18px; border: 1px solid #122b3a; background: #122b3a; color: #fff; font-size: 15px; }
 
 body:not(.home-v2) .site-footer { max-width: none; padding: 26px max(40px, calc((100vw - 1320px) / 2)); border-color: rgba(255,255,255,.18); background: #122b3a; color: rgba(255,255,255,.72); font-size: 14px; }
@@ -424,6 +427,7 @@ body:not(.home-v2) .site-footer { max-width: none; padding: 26px max(40px, calc(
   body[data-page="about"] .timeline-row p { margin-top: 10px; }
   body[data-page="contact"] .contact-page { min-height: calc(100vh - 88px); padding-block: 72px 46px; }
   body[data-page="contact"] .contact-row { align-items: flex-start; flex-direction: column; gap: 30px; }
+  body[data-page="contact"] .contact-channels { align-items: flex-start; flex-direction: column; gap: 28px; }
   body:not(.home-v2) .site-footer { padding-inline: 22px; }
 }
 
