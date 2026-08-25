@@ -67,7 +67,6 @@ function renderProjects() {
   document.querySelector("#featured-list").innerHTML = featuredCollection(featured);
   const list = document.querySelector("#all-projects");
   const filters = document.querySelectorAll(".filter");
-  const search = document.querySelector("#project-search");
   const count = document.querySelector("#project-count");
   const detailByArchiveTitle = {
     "웅진씽크빅 스마트올, 씽크빅 운영": "woongjin-smartall",
@@ -85,9 +84,8 @@ function renderProjects() {
   };
   let activeFilter = "전체";
   const draw = () => {
-    const query = search.value.trim().toLocaleLowerCase("ko-KR");
     const filtered = activeFilter === "전체" ? archiveProjects : archiveProjects.filter(p => p.industry.includes(activeFilter));
-    const selected = query ? filtered.filter(p => `${p.client} ${p.title} ${p.industry} ${p.role}`.toLocaleLowerCase("ko-KR").includes(query)) : filtered;
+    const selected = filtered;
     const detailedCount = selected.filter(p => detailByArchiveTitle[p.title]).length;
     count.textContent = `${selected.length}개의 경력 기록 · 상세 사례 ${detailedCount}개`;
     list.innerHTML = selected.map(p => {
@@ -105,7 +103,6 @@ function renderProjects() {
     activeFilter = button.dataset.filter;
     draw();
   }));
-  search.addEventListener("input", draw);
   draw();
 }
 
