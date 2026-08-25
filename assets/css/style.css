@@ -668,3 +668,65 @@ body:not(.home-v2) .site-footer { max-width: none; padding: 26px max(40px, calc(
   .home-v2 .hero-summary { font-size: 16px; }
   .home-v2 .hero-scene { right: -25%; width: 118vw; height: 36%; }
 }
+
+/* Readability scale — desktop/tablet and mobile use separate minimums */
+@media (min-width: 681px) {
+  .home-v2 .brand span,
+  .home-v2 .main-nav a,
+  .home-v2 .section-label,
+  .home-v2 .hero-actions a,
+  .home-v2 .proof-index article > span,
+  .home-v2 .case-heading span,
+  .home-v2 .journey-case-copy dt,
+  .home-v2 .case-row-no,
+  .home-v2 .case-row-title span,
+  .home-v2 .case-row-decision span,
+  .home-v2 .case-row-role span,
+  .home-v2 .operation-row time,
+  .home-v2 .operation-row > span,
+  .home-v2 .method-flow span,
+  body:not(.home-v2) .brand span,
+  body:not(.home-v2) .main-nav a,
+  body:not(.home-v2) .eyebrow,
+  body:not(.home-v2) .project-meta,
+  body:not(.home-v2) .section-head span,
+  body[data-page="projects"] .work-index-industry,
+  body[data-page="projects"] .work-index-open,
+  body[data-page="projects"] .index-row span,
+  body[data-page="detail"] .fact-list dt,
+  body[data-page="detail"] .decision-nav a,
+  body[data-page="detail"] .decision-cell span,
+  body[data-page="about"] .capability span,
+  body[data-page="about"] .timeline-row time,
+  body:not(.home-v2) .site-footer { font-size: 16px; }
+
+  .home-v2 .case-row-title p,
+  .home-v2 .case-row-role p,
+  .home-v2 .operation-row p,
+  .home-v2 .method-flow p { font-size: 18px; }
+
+  .home-v2 .case-row-decision strong { font-size: 19px; }
+  .home-v2 .journey-case-copy dd { font-size: 18px; }
+  .home-v2 .proof-index p { font-size: 18px; }
+}
+
+@media (max-width: 680px) {
+  .home-v2 .section-label,
+  .home-v2 .case-heading span,
+  .home-v2 .journey-case-copy dt,
+  .home-v2 .case-row-no,
+  .home-v2 .case-row-title span,
+  .home-v2 .case-row-decision span,
+  .home-v2 .case-row-role span,
+  .home-v2 .operation-row time,
+  .home-v2 .operation-row > span,
+  .home-v2 .method-flow span { font-size: 15px; }
+
+  .home-v2 .journey-case-copy dd,
+  .home-v2 .case-row-title p,
+  .home-v2 .case-row-role p,
+  .home-v2 .operation-row p,
+  .home-v2 .method-flow p { font-size: 16px; }
+
+  .home-v2 .case-row-decision strong { font-size: 17px; }
+}
